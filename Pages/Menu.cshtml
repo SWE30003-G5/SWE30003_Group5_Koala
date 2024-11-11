@@ -1,0 +1,44 @@
+﻿@page
+@model SWE30003_Group5_Koala.Pages.MenuModel
+@{
+    ViewData["Title"] = "Menu";
+}
+
+<!--The following is just a template to test how Razor Pages work, feel free to delete/modify it.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h1>Our Menu</h1>
+
+    @if(Model.MenuItems.Any())
+    {
+        <ul>
+            @foreach (var item in Model.MenuItems)
+            {
+                <li>
+                    <strong>@item.Name</strong><br/>
+                    Price: $@item.Price <br/>
+                    @if (item.IsAvailable)
+                    {
+                        <span style="color: green;">Available</span>
+                    }
+                    else
+                    {
+                        <span style="color: red;">Not Available</span>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No menu items available</p>
+    }
+</body>
+</html>

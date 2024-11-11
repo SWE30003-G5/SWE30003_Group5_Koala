@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWE30003_Group5_Koala.Data;
 
@@ -10,9 +11,11 @@ using SWE30003_Group5_Koala.Data;
 namespace SWE30003_Group5_Koala.Migrations
 {
     [DbContext(typeof(KoalaDbContext))]
-    partial class KoalaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111103022_AddOrderRelatedModels")]
+    partial class AddOrderRelatedModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -71,7 +74,7 @@ namespace SWE30003_Group5_Koala.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
+            modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrederItem", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -95,7 +98,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrederItems");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.User", b =>
@@ -140,7 +143,7 @@ namespace SWE30003_Group5_Koala.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
+            modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrederItem", b =>
                 {
                     b.HasOne("SWE30003_Group5_Koala.Models.MenuItem", "MenuItem")
                         .WithMany()

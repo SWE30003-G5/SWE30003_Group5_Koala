@@ -13,7 +13,7 @@ namespace SWE30003_Group5_Koala.Models
         public DateTime Date { get; set; }
         [Required]
         [StringLength(20)]
-        public string Tyoe { get; set; }
+        public string Type { get; set; }
         [Required]
         [Range(0.0, Double.MaxValue, ErrorMessage = "The price must be positive.")]
         [Column(TypeName = "decimal(10, 2)")]

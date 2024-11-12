@@ -12,29 +12,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
+    <style>
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Ensures exactly 4 columns per row */
+            gap: 20px;
+        }
+        .menu-item {
+            border: 1px solid #ddd;
+            padding: 16px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .menu-item .name-price {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        .menu-item button {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .menu-item button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <h1>Our Menu</h1>
 
     @if(Model.MenuItems.Any())
     {
-        <ul>
+            <div class="menu-grid">
             @foreach (var item in Model.MenuItems)
             {
-                <li>
-                    <strong>@item.Name</strong><br/>
-                    Price: $@item.Price <br/>
-                    @if (item.IsAvailable)
-                    {
-                        <span style="color: green;">Available</span>
-                    }
-                    else
-                    {
-                        <span style="color: red;">Not Available</span>
-                    }
-                </li>
+                        <div class="menu-item">
+                            <img src="/Images/@item.ImageLocation" alt="@item.Name">
+                            <div class="name-price">
+                                <span>@item.Name</span>
+                                <span>$@item.Price</span>
+                            </div>
+                                <button @(item.IsAvailable ? "" : "disabled")  onclick="window.location='/Order'">
+                                    @(item.IsAvailable ? "Order" : "Unavailable")
+                                </button>
+                        </div>
             }
-        </ul>
+            </div>
     }
     else
     {

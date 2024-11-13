@@ -7,6 +7,7 @@ namespace SWE30003_Group5_Koala.Models
     public class Order
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
@@ -18,8 +19,8 @@ namespace SWE30003_Group5_Koala.Models
         [Range(0.0, Double.MaxValue, ErrorMessage = "The price must be positive.")]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal TotalAmount { get; set; }
-        [Required]
         [StringLength(20)]
+        [DefaultValue("In Process")]
         public string Status { get; set; }
         [Required]
         public int UserID { get; set; }

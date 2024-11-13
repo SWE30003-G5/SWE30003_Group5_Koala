@@ -16,23 +16,54 @@ namespace SWE30003_Group5_Koala.Pages
             _context = context;
             _logger = logger;
         }
-        public IList<Order> Orders { get; set; } = default!;
         public IList<MenuItem> MenuItems { get; set; } = default!;
+        [BindProperty]
+        public string OrderType { get; set; }
+        [BindProperty]
+        public List<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+        [BindProperty]
+        public decimal TotalAmount { get; set; }
         public async Task OnGetAsync()
         {
-            if (_context.Orders == null)
+            if (_context.MenuItems == null)
             {
-                _logger.LogError("The Orders context is null.");
+                _logger.LogError("The Menu Items context is null.");
                 return;
             }
             else {
-                Orders = await _context.Orders.ToListAsync();
+
                 MenuItems = await _context.MenuItems.ToListAsync();
             }
-            if (Orders.Count == 0)
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
             {
-                _logger.LogInformation("No orders found.");
+                return Page();
             }
+
+            var order = new Order
+            {
+                Date = DateTime.Now,
+                Type = OrderType,
+                TotalAmount = TotalAmount,
+                UserID = 1, // Dummy UserID
+                Status = "In Process"
+            };
+            try
+            {
+                _context.Orders.Add(order);
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Order stored successfully: ID={ID}, Date={Date}, Type={Type}, TotalAmount={TotalAmount}, UserID={UserID}, Status={Status}",
+                    order.ID, order.Date, order.Type, order.TotalAmount, order.UserID, order.Status);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while storing the order.");
+                return Page();
+            }
+
+            return RedirectToPage("/Order", new { id = order.ID });
         }
     }
 }

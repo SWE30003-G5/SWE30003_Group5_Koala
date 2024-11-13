@@ -15,7 +15,7 @@
     <h1>Place order</h1>
     <form method="post" id="orderForm">
         <label id="orderType">Choose your Order Type</label>
-        <select for="orderType" name="orderTypeList" form="orderForm">
+        <select asp-for="OrderType" id="orderType" class="form-control">
             <option value="takeaway">Takeaway</option>
             <option value="dinein">Dine in</option>
         </select>
@@ -24,13 +24,23 @@
             <div id="orderItemContainer"></div>
             <button type="button" id="addOrderItem">Add</button>
         </fieldset>
-        <p>Price: $<spam id="total"></spam></p>
+        <p>Price: $<input type="text" id="total" asp-for="TotalAmount" readonly></p>
         <p>Please select your payment method:</p>
-        <input type="radio" id="cash" name="cash" value="cash">
+        <input type="radio" id="cash" name="paymentMethod" value="cash">
         <label for="cash">Cash</label><br>
-        <input type="radio" id="card" name="card" value="card">
+        <input type="radio" id="card" name="paymentMethod" value="card">
         <label for="card">Card</label><br>
-        <button type="submit">Pay and place order</button>
+        <div id="cardDetails" style="display: none;">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" maxlength="16" placeholder="Enter your card number">
+
+            <label for="cardName">Card Name</label>
+            <input type="text" id="cardName" name="cardName" placeholder="Enter name on card">
+
+            <label for="cardCVV">CVV</label>
+            <input type="text" id="cardCVV" name="cardCVV" maxlength="3" placeholder="CVV">
+        </div>
+        <button type="submit">Place order</button>
     </form>
     <script>
         const menuItems = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MenuItems));

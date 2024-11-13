@@ -14,6 +14,12 @@
             option.value = item.ID;
             option.textContent = item.Name + " - $" + item.Price;
             option.dataset.price = item.Price;
+
+            if (!item.IsAvailable) {
+                option.disabled = true;
+                option.textContent += " (Unavailable)";
+            }
+
             selectElement.appendChild(option);
         });
     } else {
@@ -25,7 +31,13 @@
     quantityInput.name = 'quantity';
     quantityInput.min = '1';
     quantityInput.value = '1';
+    quantityInput.setAttribute('data-asp-net', 'Quantity');
 
+    quantityInput.addEventListener('input', function (e) {
+        if (this.value === '' || isNaN(this.value ) || this.value === '0') {
+            this.value = '1';
+        }
+    });
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
     deleteButton.textContent = 'Delete';
@@ -59,5 +71,18 @@ function updateTotal() {
         }
     });
 
-    document.getElementById('total').textContent = total.toFixed(2);
+    document.getElementById('total').value = total.toFixed(2);
+    document.getElementById('totalAmountInput').value = total.toFixed(2);
 }
+
+document.getElementById('cash').addEventListener('change', function () {
+    document.getElementById('cardDetails').style.display = 'none';
+});
+
+document.getElementById('card').addEventListener('change', function () {
+    document.getElementById('cardDetails').style.display = 'block';
+});
+
+document.getElementById('orderForm').addEventListener('submit', function () {
+    updateTotal();
+});

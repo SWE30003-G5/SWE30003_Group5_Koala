@@ -12,9 +12,57 @@
     <title>@ViewData["Title"]</title>
 </head>
 <body>
-    <h1>Place order</h1>
-    <form method="post">
-        <button type="submit">Refresh</button>
-    </form>
+    <div class="container">
+        <h1 class="my-4">Place order</h1>
+        <form method="post" id="orderForm">
+            <div class="form-group">
+                <label for="orderType">Choose your Order Type</label>
+                <select asp-for="OrderType" id="orderType" class="form-control">
+                    <option value="takeaway">Takeaway</option>
+                    <option value="dinein">Dine in</option>
+                </select>
+            </div>
+            <fieldset class="form-group">
+                <legend>Order Item</legend>
+                <div id="orderItemContainer"></div>
+                <button type="button" id="addOrderItem" class="btn btn-primary">Add</button>
+            </fieldset>
+            <div class="form-group">
+                <label for="total">Price:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input type="text" id="total" asp-for="TotalAmount" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <p>Please select your payment method:</p>
+                <div class="form-check">
+                    <input type="radio" id="cash" name="paymentMethod" value="cash" class="form-check-input" checked>
+                    <label for="cash" class="form-check-label">Cash</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="card" name="paymentMethod" value="card" class="form-check-input">
+                    <label for="card" class="form-check-label">Card</label>
+                </div>
+            </div>
+            <div id="cardDetails" class="form-group" style="display: none;">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" maxlength="16" class="form-control" value="1234567812345678" readonly>
+
+                <label for="cardName">Card Name</label>
+                <input type="text" id="cardName" name="cardName" class="form-control" value="An User" readonly>
+
+                <label for="cardCVV">CVV</label>
+                <input type="text" id="cardCVV" name="cardCVV" maxlength="3" class="form-control" value="123" readonly>
+            </div>
+            <button type="submit" class="btn btn-success">Place order</button>
+        </form>
+    </div>
+    <script>
+        const menuItems = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MenuItems));
+    </script>
+    <script src="~/js/order.js"></script>
 </body>
 </html>

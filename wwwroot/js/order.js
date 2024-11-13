@@ -1,4 +1,47 @@
-﻿document.getElementById('addOrderItem').addEventListener('click', function () {
+﻿document.getElementById('orderForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const orderItems = [];
+    const orderItemsElements = document.querySelectorAll('.order-item');
+    var valid = true;
+
+    orderItemsElements.forEach(item => {
+        const menuItemID = parseInt(item.querySelector('select[name="menuItem"]').value, 10);
+        const quantity = parseInt(item.querySelector('input[name="quantity"]').value, 10);
+
+        if (!menuItemID || menuItemID === "") {
+            valid = false;
+        }
+
+        if (menuItemID && quantity) {
+            orderItems.push({
+                MenuItemID: menuItemID,
+                Quantity: quantity
+            });
+        }
+    });
+
+    if (!valid) {
+        alert("Please select a menu item for all order items.");
+        return;
+    }
+
+    if (orderItems.length === 0) {
+        alert("You must add at least one order item.");
+        return;
+    }
+
+    const orderItemsJson = JSON.stringify(orderItems);
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'OrderItemsJson';
+    hiddenInput.value = orderItemsJson;
+
+    this.appendChild(hiddenInput);
+    this.submit();
+});
+
+document.getElementById('addOrderItem').addEventListener('click', function () {
     const container = document.getElementById('orderItemContainer');
     const orderItem = document.createElement('div');
     orderItem.classList.add('order-item');
@@ -7,7 +50,6 @@
     selectElement.name = 'menuItem';
     selectElement.innerHTML = '<option value="" disabled selected>Select a menu item</option>';
 
-    // Populate select options using the menuItems JSON data
     if (menuItems && menuItems.length > 0) {
         menuItems.forEach(item => {
             const option = document.createElement('option');
@@ -23,7 +65,7 @@
             selectElement.appendChild(option);
         });
     } else {
-        console.warn("menuItems is empty or undefined");
+        console.warn("Menu Items is empty or undefined");
     }
 
     const quantityInput = document.createElement('input');
@@ -31,8 +73,6 @@
     quantityInput.name = 'quantity';
     quantityInput.min = '1';
     quantityInput.value = '1';
-    quantityInput.setAttribute('data-asp-net', 'Quantity');
-
     quantityInput.addEventListener('input', function (e) {
         if (this.value === '' || isNaN(this.value ) || this.value === '0') {
             this.value = '1';
@@ -72,7 +112,6 @@ function updateTotal() {
     });
 
     document.getElementById('total').value = total.toFixed(2);
-    document.getElementById('totalAmountInput').value = total.toFixed(2);
 }
 
 document.getElementById('cash').addEventListener('change', function () {

@@ -13,8 +13,28 @@
 </head>
 <body>
     <h1>Place order</h1>
-    <form method="post">
-        <button type="submit">Refresh</button>
+    <form method="post" id="orderForm">
+        <label id="orderType">Choose your Order Type</label>
+        <select for="orderType" name="orderTypeList" form="orderForm">
+            <option value="takeaway">Takeaway</option>
+            <option value="dinein">Dine in</option>
+        </select>
+        <fieldset>
+            <legend>Order Item</legend>
+            <div id="orderItemContainer"></div>
+            <button type="button" id="addOrderItem">Add</button>
+        </fieldset>
+        <p>Price: $<spam id="total"></spam></p>
+        <p>Please select your payment method:</p>
+        <input type="radio" id="cash" name="cash" value="cash">
+        <label for="cash">Cash</label><br>
+        <input type="radio" id="card" name="card" value="card">
+        <label for="card">Card</label><br>
+        <button type="submit">Pay and place order</button>
     </form>
+    <script>
+        const menuItems = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MenuItems));
+    </script>
+    <script src="~/js/order.js"></script>
 </body>
 </html>

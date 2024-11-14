@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWE30003_Group5_Koala.Data;
 
@@ -10,9 +11,11 @@ using SWE30003_Group5_Koala.Data;
 namespace SWE30003_Group5_Koala.Migrations
 {
     [DbContext(typeof(KoalaDbContext))]
-    partial class KoalaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112083030_AddRoleAndImageLocation")]
+    partial class AddRoleAndImageLocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -124,10 +127,8 @@ namespace SWE30003_Group5_Koala.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 

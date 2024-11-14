@@ -11,13 +11,17 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+
         [Required]
-        [StringLength(20)]
+        [StringLength(10)]
+        [DefaultValue("Customer")]
         public string Role {  get; set; }
+
         [Required]
         [EmailAddress]
         [StringLength(100)]
         public string Email { get; set; }
+
         [Phone]
         [StringLength(10, ErrorMessage = "Phone number cannot exceed 10 digits.")]
         [Display(Name = "Phone Number")]

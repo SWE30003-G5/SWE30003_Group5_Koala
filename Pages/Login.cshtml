@@ -1,0 +1,82 @@
+﻿@page
+@model SWE30003_Group5_Koala.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+<!--The following is just a template to test how Razor Pages work, feel free to delete/modify it.-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Center the main container */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* Centers the form vertically within available viewport minus header/footer */
+        }
+
+        /* Styling for the login form container */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+            /* Style for input fields */
+            .login-container input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                text-align: center;
+                background-color: #f9f9f9; /* Light background for contrast */
+                color: #333; /* Darker text for readability */
+            }
+
+                /* Placeholder styling for inputs */
+                .login-container input::placeholder {
+                    color: #888; /* Softer color for placeholder */
+                }
+
+            /* Styling for the login button */
+            .login-container button {
+                width: 100px;
+                padding: 10px;
+                margin-top: 20px;
+                background-color: #007bff; /* Button background color */
+                color: #fff; /* White text for contrast */
+                border: 1px solid #007bff;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                text-align: center;
+            }
+
+                .login-container button:hover {
+                    background-color: #0056b3; /* Darker shade on hover */
+                    border-color: #0056b3;
+                }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="login-container">
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button>Login</button>
+        </div>
+    </div>
+</body>
+</html>

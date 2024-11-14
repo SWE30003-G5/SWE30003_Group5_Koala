@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWE30003_Group5_Koala.Data;
 
@@ -10,9 +11,11 @@ using SWE30003_Group5_Koala.Data;
 namespace SWE30003_Group5_Koala.Migrations
 {
     [DbContext(typeof(KoalaDbContext))]
-    partial class KoalaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241112085039_FixRoleInUsers")]
+    partial class FixRoleInUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -41,7 +44,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MenuItems", (string)null);
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
@@ -73,7 +76,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
@@ -100,53 +103,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems", (string)null);
-                });
-
-            modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PartySize")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("TableID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TableID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Reservations", (string)null);
-                });
-
-            modelBuilder.Entity("SWE30003_Group5_Koala.Models.Table", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.User", b =>
@@ -177,7 +134,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
@@ -208,25 +165,6 @@ namespace SWE30003_Group5_Koala.Migrations
                     b.Navigation("MenuItem");
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
-                {
-                    b.HasOne("SWE30003_Group5_Koala.Models.Table", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SWE30003_Group5_Koala.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Table");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,12 +15,17 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [StringLength(10)]
         [DefaultValue("Customer")]
-        public string Role {  get; set; }
+        public string Role { get; set; }
 
         [Required]
         [EmailAddress]
         [StringLength(100)]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        [DefaultValue("Hunter3")]
+        public string Password { get; set; } //password must contain letters and numbers only, no special characters
 
         [Phone]
         [StringLength(10, ErrorMessage = "Phone number cannot exceed 10 digits.")]

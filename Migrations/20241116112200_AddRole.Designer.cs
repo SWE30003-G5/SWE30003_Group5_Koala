@@ -11,8 +11,8 @@ using SWE30003_Group5_Koala.Data;
 namespace SWE30003_Group5_Koala.Migrations
 {
     [DbContext(typeof(KoalaDbContext))]
-    [Migration("20241112085039_FixRoleInUsers")]
-    partial class FixRoleInUsers
+    [Migration("20241116112200_AddRole")]
+    partial class AddRole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,10 +127,8 @@ namespace SWE30003_Group5_Koala.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 

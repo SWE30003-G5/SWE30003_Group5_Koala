@@ -5,7 +5,7 @@
 namespace SWE30003_Group5_Koala.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRoleAndImageLocation : Migration
+    public partial class AddRole : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,23 +18,11 @@ namespace SWE30003_Group5_Koala.Migrations
                 oldClrType: typeof(string),
                 oldType: "TEXT",
                 oldMaxLength: 20);
-
-            migrationBuilder.AddColumn<string>(
-                name: "ImageLocation",
-                table: "MenuItems",
-                type: "TEXT",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ImageLocation",
-                table: "MenuItems");
-
             migrationBuilder.AlterColumn<string>(
                 name: "Role",
                 table: "Users",

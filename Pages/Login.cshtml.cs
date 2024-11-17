@@ -24,7 +24,7 @@ namespace SWE30003_Group5_Koala.Pages
             _logger = logger;
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             //Console.WriteLine(userEmail);
             //Console.WriteLine(userPassword); 
@@ -55,10 +55,12 @@ namespace SWE30003_Group5_Koala.Pages
 
                 // Add the cookie to the response cookie collection
                 Response.Cookies.Append("userCookie", userConvertJson, cookieOptions);
+                return RedirectToPage("/Index");
             }
             else
             {
                 ViewData["ErrorMessage"] = "Check your information again";
+                return Page();
             }
         }
     }

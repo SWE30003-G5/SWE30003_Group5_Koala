@@ -20,6 +20,7 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
         }
 
         public Order Order { get; set; } = default!;
+        public IList<OrderItem> OrderItems { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,6 +38,10 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
             {
                 Order = order;
             }
+            OrderItems = await _context.OrderItems
+                .Include(oi => oi.MenuItem)
+                .Where(oi => oi.OrderID == id)
+                .ToListAsync();
             return Page();
         }
     }

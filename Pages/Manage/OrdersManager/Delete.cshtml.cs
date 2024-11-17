@@ -21,7 +21,7 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
 
         [BindProperty]
         public Order Order { get; set; } = default!;
-
+        public IList<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -39,6 +39,10 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
             {
                 Order = order;
             }
+            OrderItems = await _context.OrderItems
+                .Include(oi => oi.MenuItem)
+                .Where(oi => oi.OrderID == id)
+                .ToListAsync();
             return Page();
         }
 
@@ -48,6 +52,12 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
             {
                 return NotFound();
             }
+
+            var orderItems = await _context.OrderItems
+                .Where(oi => oi.OrderID == id)
+                .ToListAsync();
+
+            _context.OrderItems.RemoveRange(orderItems);
 
             var order = await _context.Orders.FindAsync(id);
             if (order != null)

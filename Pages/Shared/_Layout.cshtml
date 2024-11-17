@@ -1,4 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@using SWE30003_Group5_Koala.Models
+
+@{
+    var userCookie = Context.Request.Cookies["userCookie"];
+    string userRole = null;
+
+    if (!string.IsNullOrEmpty(userCookie))
+    {
+        try
+        {
+            var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+
+            if (users != null && users.Count > 0)
+            {
+                userRole = users[0].Role;
+            }
+        }
+        catch (System.Text.Json.JsonException jsonEx)
+        {
+            Console.WriteLine($"JSON Error: {jsonEx.Message}");
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,7 +55,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Reservation">Reservation</a>
                         </li>
-                        @if (Context.Request.Cookies["userCookie"] == null) @* check if cookie exist to show login page *@
+                        @if (userCookie == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
@@ -47,9 +71,12 @@
                                 </form>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Manage/Admin">Management</a>
-                        </li>
+                        @if (userRole == "Admin" || userRole == "Staff")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manage/Admin">Management</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>

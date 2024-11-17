@@ -33,6 +33,14 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
+            /* Center the form's content */
+            .login-container form {
+                display: flex;
+                flex-direction: column; /* Stack inputs and button vertically */
+                align-items: center; /* Center align inputs and button */
+                width: 100%; /* Ensure the form uses the full width of the container */
+            }
+
             /* Style for input fields */
             .login-container input {
                 width: 100%;
@@ -73,10 +81,20 @@
 <body>
     <div class="main-content">
         <div class="login-container">
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button>Login</button>
+            <form method="post">
+                <input type="text" placeholder="Email" asp-for="userEmail" />
+                <input type="password" placeholder="Password" asp-for="userPassword" />
+                <button>Login</button>
+            </form>
         </div>
     </div>
+
+     @if (ViewData["ErrorMessage"] != null)
+    {
+        <script>
+            console.log("Error in login");
+            alert("@ViewData["ErrorMessage"]");
+        </script>
+    }
 </body>
 </html>

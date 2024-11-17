@@ -88,5 +88,13 @@
             </form>
         </div>
     </div>
+
+     @if (ViewData["ErrorMessage"] != null)
+    {
+        <script>
+            console.log("Error in login");
+            alert("@ViewData["ErrorMessage"]");
+        </script>
+    }
 </body>
 </html>

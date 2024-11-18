@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using SWE30003_Group5_Koala.Data;
+using SWE30003_Group5_Koala.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,41 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.ToString();
+    var userCookie = context.Request.Cookies["userCookie"];
+    string userRole = null;
+
+    if (!string.IsNullOrEmpty(userCookie))
+    {
+        try
+        {
+            var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+
+            if (users != null && users.Count > 0)
+            {
+                userRole = users[0].Role;
+            }
+        }
+        catch (System.Text.Json.JsonException ex)
+        {
+            Console.WriteLine($"JSON Exception: {ex.Message}");
+        }
+    }
+    if (path.StartsWith("/Manage", StringComparison.OrdinalIgnoreCase))
+    {
+        if (userRole != "Admin" && userRole != "Staff")
+        {
+            var userIp = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown IP";
+            Console.WriteLine($"Unauthorized access attempt to {path} by IP: {userIp}");
+            context.Response.Redirect("/Index");
+            return;
+        }
+    }
+    await next();
+});
 
 app.UseRouting();
 

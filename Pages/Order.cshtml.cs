@@ -48,12 +48,39 @@ namespace SWE30003_Group5_Koala.Pages
                 return Page();
             }
 
+            var userCookie = Request.Cookies["userCookie"];
+            int? userID = null;
+
+            if (!string.IsNullOrEmpty(userCookie))
+            {
+                try
+                {
+                    var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+
+                    if (users != null && users.Count > 0)
+                    {
+                        userID = users[0].ID;
+                    }
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger.LogError(ex, "Error parsing userCookie.");
+                    return BadRequest("Invalid user data.");
+                }
+            }
+
+            if (!userID.HasValue)
+            {
+                _logger.LogWarning("UserID is missing from cookie.");
+                return Unauthorized();
+            }
+
             var order = new Order
             {
                 Date = DateTime.Now,
                 Type = OrderType,
                 TotalAmount = TotalAmount,
-                UserID = 1, // Dummy UserID
+                UserID = userID.Value,
                 Status = "In Process"
             };
             try

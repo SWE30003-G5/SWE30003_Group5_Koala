@@ -55,6 +55,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Reservation">Reservation</a>
                         </li>
+                        @if (userRole == "Admin" || userRole == "Staff")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manage/Admin">Management</a>
+                            </li>
+                        }
                         @if (userCookie == null)
                         {
                             <li class="nav-item">
@@ -69,12 +75,6 @@
                                         Logout
                                     </button>
                                 </form>
-                            </li>
-                        }
-                        @if (userRole == "Admin" || userRole == "Staff")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Manage/Admin">Management</a>
                             </li>
                         }
                         <li class="nav-item">

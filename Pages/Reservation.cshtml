@@ -32,5 +32,11 @@
         <input asp-for="Date" type="date" id="date" name="Date" class="form-control" required>
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onclick="showMessage()">Submit</button>
 </form>
+
+<script>
+    function showMessage() {
+        alert("Reservation booked!");
+    }
+</script>

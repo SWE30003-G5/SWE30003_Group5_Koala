@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using SWE30003_Group5_Koala.Data;
 using SWE30003_Group5_Koala.Models;
 
@@ -29,6 +30,7 @@ app.Use(async (context, next) =>
     var path = context.Request.Path.ToString();
     var userCookie = context.Request.Cookies["userCookie"];
     string userRole = null;
+    string userEmail = null;
 
     if (!string.IsNullOrEmpty(userCookie))
     {
@@ -39,6 +41,7 @@ app.Use(async (context, next) =>
             if (users != null && users.Count > 0)
             {
                 userRole = users[0].Role;
+                userEmail = users[0].Email;
             }
         }
         catch (System.Text.Json.JsonException ex)
@@ -46,15 +49,23 @@ app.Use(async (context, next) =>
             Console.WriteLine($"JSON Exception: {ex.Message}");
         }
     }
+    bool isAdmin = userRole == "Admin";
+    bool isStaff = userRole == "Staff";
     if (path.StartsWith("/Manage", StringComparison.OrdinalIgnoreCase))
     {
-        if (userRole != "Admin" && userRole != "Staff")
+        if (!isAdmin && !isStaff)
         {
             var userIp = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown IP";
             Console.WriteLine($"Unauthorized access attempt to {path} by IP: {userIp}");
             context.Response.Redirect("/Index");
             return;
         }
+    }
+    if (path.StartsWith("/Manage/UsersManager", StringComparison.OrdinalIgnoreCase) && isStaff)
+    {
+        Console.WriteLine($"Unauthorized access attempt to {path} by user: {userEmail}");
+        context.Response.Redirect("/Index");
+        return;
     }
     await next();
 });

@@ -13,16 +13,24 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
 {
     public class EditModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
+        private readonly ILogger<EditModel> _logger;  // Declare a logger
 
-        public EditModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        // Inject the logger into the constructor
+        public EditModel(KoalaDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
         public Order Order { get; set; } = default!;
-
+        public List<SelectListItem> StatusOptions { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "In Process", Value = "In Process" },
+            new SelectListItem { Text = "Completed", Value = "Completed" },
+            new SelectListItem { Text = "Canceled", Value = "Canceled" }
+        };
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -36,7 +44,6 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
                 return NotFound();
             }
             Order = order;
-           ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
             return Page();
         }
 
@@ -46,17 +53,25 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
         {
             if (!ModelState.IsValid)
             {
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    _logger.LogWarning("ModelState Error: {ErrorMessage}", error.ErrorMessage);
+                }
                 return Page();
             }
+
+            _logger.LogInformation("Editing an order (ID = {ID})...", Order.ID);
 
             _context.Attach(Order).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Edited the order (ID = {ID})", Order.ID);
             }
             catch (DbUpdateConcurrencyException)
             {
+                _logger.LogInformation("An exception occurring while the order (ID = {ID}) is being edited", Order.ID);
                 if (!OrderExists(Order.ID))
                 {
                     return NotFound();

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace SWE30003_Group5_Koala.Models
 {
@@ -21,10 +22,10 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [Display(Name = "Reservation Time")]
         public DateTime Time { get; set; }
-
+        [ForeignKey("Table")]
         [Display(Name = "Assigned Table")]
         public int TableID { get; set; }
-        [ForeignKey("TableID")]
+        [ValidateNever]
         public Table Table { get; set; }
 
         [Required]

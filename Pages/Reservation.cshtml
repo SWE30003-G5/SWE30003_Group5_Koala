@@ -4,6 +4,33 @@
     ViewData["Title"] = "Reservation";
 }
 
-<!--The following is just a template to show how Razor Pages works, feel free to delete/modify it.-->
 <h1>@Model.Message</h1>
-<p>This is a basic Razor page example.</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input asp-for = "Name" type="text" id="name" name="Name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input asp-for="Phone" type="phone" id="phone" name="Phone" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input asp-for="Email" type="email" id="email" name="Email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="partysize">Party Size:</label>
+        <input asp-for="PartySize" type="number" id="guests" name="Guests" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="time">Time:</label>
+        <input asp-for="Time" type="time" id="time" name="Time" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="date">Date:</label>
+        <input asp-for="Date" type="date" id="date" name="Date" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

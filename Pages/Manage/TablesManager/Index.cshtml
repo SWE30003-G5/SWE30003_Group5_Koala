@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Table[0].Id)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Table[0].IsAvailable)
             </th>
             <th></th>
@@ -22,6 +25,9 @@
     <tbody>
 @foreach (var item in Model.Table) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsAvailable)
             </td>
@@ -34,3 +40,6 @@
 }
     </tbody>
 </table>
+<div>
+    <a asp-page="../Admin">Back to Admin page</a>
+</div>

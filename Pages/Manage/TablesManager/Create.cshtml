@@ -7,14 +7,13 @@
 
 <h1>Create</h1>
 
-<h4>Table</h4>
+<h4>Table @Html.DisplayFor(model => model.Table.Id)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">
-                <span class="text-danger">*</span>
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Table.IsAvailable" /> @Html.DisplayNameFor(model => model.Table.IsAvailable)
                 </label>

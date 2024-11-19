@@ -23,13 +23,13 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Reservation.PartySize" class="control-label"></label>
-                <input asp-for="Reservation.PartySize" class="form-control" />
+                <input asp-for="Reservation.PartySize" class="form-control"/>
                 <span asp-validation-for="Reservation.PartySize" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Reservation.Time" class="control-label"></label>
-                <input asp-for="Reservation.Time" class="form-control" />
+                <input asp-for="Reservation.Time" class="form-control" type="datetime-local" min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"/>
                 <span asp-validation-for="Reservation.Time" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,7 +40,7 @@
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Reservation.Status" class="control-label"></label>
-                <input asp-for="Reservation.Status" class="form-control" />
+                <select asp-for="Reservation.Status" class="form-control" asp-items="Model.StatusOption"></select>
                 <span asp-validation-for="Reservation.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -57,3 +57,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script src="~/js/reservationsManger.js"></script>

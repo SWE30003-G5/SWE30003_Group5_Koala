@@ -50,7 +50,14 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                @if (item.Status == "Confirmed" || item.Status == "Cancelled")
+                {
+                    <span>Edit</span>
+                }
+                else
+                {
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                } |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>

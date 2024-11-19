@@ -9,9 +9,10 @@ namespace SWE30003_Group5_Koala.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [ForeignKey("User")]
         public int UserID { get; set; }
 
-        [ForeignKey("UserID")]
+        [ValidateNever]
         public User User { get; set; }
 
         [Required]
@@ -20,6 +21,7 @@ namespace SWE30003_Group5_Koala.Models
         public int PartySize { get; set; }
 
         [Required]
+        [FutureDate(ErrorMessage = "Reservation time must be in the future.")]
         [Display(Name = "Reservation Time")]
         public DateTime Time { get; set; }
         [ForeignKey("Table")]
@@ -31,7 +33,20 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [Display(Name = "Reservation Status")]
         [StringLength(20)]
-        public string Status { get; set; } // "Pending" (Default), "Confirmed", "Cancelled"
+        public string Status { get; set; } = "Pending";
     }
-
+    public class FutureDateAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value is DateTime dateTime)
+            {
+                if (dateTime <= DateTime.Now)
+                {
+                    return new ValidationResult(ErrorMessage ?? "Date and time must be in the future.");
+                }
+            }
+            return ValidationResult.Success;
+        }
+    }
 }

@@ -14,15 +14,23 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
     public class EditModel : PageModel
     {
         private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
-
-        public EditModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        private readonly ILogger<EditModel> _logger;
+        public EditModel(SWE30003_Group5_Koala.Data.KoalaDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
         public Reservation Reservation { get; set; } = default!;
 
+        public List<SelectListItem> StatusOption { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Pending", Value = "Pending" },
+            new SelectListItem { Text = "Confirmed", Value = "Confirmed" },
+            new SelectListItem { Text = "Cancelled", Value = "Cancelled" }
+        };
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -36,8 +44,24 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
                 return NotFound();
             }
             Reservation = reservation;
-           ViewData["TableID"] = new SelectList(_context.Tables, "Id", "Id");
-           ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
+            if (Reservation.TableID != null)
+            {
+                ViewData["TableID"] = new SelectList(
+                    await _context.Tables.Where(t => t.IsAvailable || t.Id == Reservation.TableID).ToListAsync(),
+                    "Id",
+                    "Id",
+                    Reservation.TableID
+                );
+            }
+            else
+            {
+                ViewData["TableID"] = new SelectList(
+                    await _context.Tables.Where(t => t.IsAvailable).ToListAsync(),
+                    "Id",
+                    "Id"
+                );
+            }
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
             return Page();
         }
 
@@ -54,7 +78,44 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
 
             try
             {
-                await _context.SaveChangesAsync();
+                if (Reservation.TableID != null)
+                {
+                    var currentTable = await _context.Tables.FirstOrDefaultAsync(t => t.Id == Reservation.TableID);
+                    if (currentTable != null)
+                    {
+                        var originalAvailability = currentTable.IsAvailable;
+
+                        if (Reservation.Status == "Confirmed" || Reservation.Status == "Cancelled")
+                        {
+                            _logger.LogInformation("Reservation status is {Status}. Setting table availability to true.", Reservation.Status);
+                            currentTable.IsAvailable = true;
+                        }
+                        else if (!originalAvailability)
+                        {
+                            _logger.LogInformation("Table was not originally available. Setting table availability to true.");
+                            currentTable.IsAvailable = true;
+                            if (!currentTable.IsAvailable)
+                            {
+                                ModelState.AddModelError("Reservation.TableID", "The selected table is no longer available.");
+                                currentTable.IsAvailable = originalAvailability;
+                                ViewData["TableID"] = new SelectList(
+                                    await _context.Tables.Where(t => t.IsAvailable).ToListAsync(),
+                                    "Id",
+                                    "Id"
+                                );
+                                ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
+                                _logger.LogWarning("Table is no longer available. Reverting availability and returning page.");
+                                return Page();
+                            }
+                        }
+                        else
+                        {
+                            currentTable.IsAvailable = false;
+                        }
+                        _context.Attach(currentTable).State = EntityState.Modified;
+                    }
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

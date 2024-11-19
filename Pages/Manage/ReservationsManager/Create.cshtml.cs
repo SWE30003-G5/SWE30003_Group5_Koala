@@ -21,8 +21,8 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
 
         public IActionResult OnGet()
         {
-        ViewData["TableID"] = new SelectList(_context.Tables, "Id", "Id");
-        ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
+            ViewData["TableID"] = new SelectList(_context.Tables, "Id", "Id");
+            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
             return Page();
         }
 
@@ -36,6 +36,8 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
             {
                 return Page();
             }
+
+            Reservation.TableID = 1;
 
             _context.Reservations.Add(Reservation);
             await _context.SaveChangesAsync();

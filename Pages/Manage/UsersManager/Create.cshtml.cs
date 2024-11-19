@@ -26,7 +26,13 @@ namespace SWE30003_Group5_Koala.Pages.Manage.UsersManager
 
         [BindProperty]
         public User User { get; set; } = default!;
-
+        public List<SelectListItem> RoleOption { get; set; } = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "--Select Role--", Value = "", Disabled = true, Selected = true },
+            new SelectListItem { Text = "Admin", Value = "Admin" },
+            new SelectListItem { Text = "Customer", Value = "Customer" },
+            new SelectListItem { Text = "Staff", Value = "Staff" }
+        };
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {

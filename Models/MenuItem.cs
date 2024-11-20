@@ -16,9 +16,11 @@ namespace SWE30003_Group5_Koala.Models
         [Column(TypeName = "decimal(10, 2)")]
         public decimal Price { get; set; }
         [DefaultValue(true)]
+        [Display(Name = "Availability")]
         public bool IsAvailable { get; set; }
         [StringLength(50)]
         [DefaultValue("Blank")]
+        [Display(Name = "Image Location")]
         public string ImageLocation { get; set; }
     }
 }

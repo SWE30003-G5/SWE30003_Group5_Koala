@@ -46,7 +46,7 @@ namespace SWE30003_Group5_Koala.Pages
                 return Page(); // Stay on the page and show the error
             }
 
-            
+
             _context.Users.Add(User);
             _context.SaveChanges();
 

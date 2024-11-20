@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,13 +19,16 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [Range(0.0, Double.MaxValue, ErrorMessage = "The price must be positive.")]
         [Column(TypeName = "decimal(10, 2)")]
+        [Display(Name = "Total Amount")]
         public decimal TotalAmount { get; set; }
         [StringLength(20)]
         [DefaultValue("In Process")]
         public string Status { get; set; }
         [Required]
+        [ForeignKey("User")]
+        [Display(Name = "User ID")]
         public int UserID { get; set; }
-        [ForeignKey("UserID")]
+        [ValidateNever]
         public User User { get; set; }
     }
 }

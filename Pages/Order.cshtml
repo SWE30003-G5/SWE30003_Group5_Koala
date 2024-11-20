@@ -10,8 +10,9 @@
         <div class="form-group">
             <label for="orderType">Choose your Order Type</label>
             <select asp-for="OrderType" id="orderType" class="form-control">
-                <option value="Takeaway">Takeaway</option>
-                <option value="Dine in">Dine in</option>
+                <option value="" disabled selected>Please select your order type</option>
+                <option value="takeaway">Takeaway</option>
+                <option value="dinein">Dine in</option>
             </select>
         </div>
         <fieldset class="form-group">

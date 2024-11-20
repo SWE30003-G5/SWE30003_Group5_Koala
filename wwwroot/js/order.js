@@ -17,8 +17,6 @@
 document.getElementById('orderForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
-    console.log(document.cookie);
-
     try {
         const userCookie = getCookie("userCookie");
         const users = JSON.parse(userCookie);

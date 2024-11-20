@@ -31,7 +31,7 @@ app.Use(async (context, next) =>
     var userCookie = context.Request.Cookies["userCookie"];
     string userRole = null;
     string userEmail = null;
-
+    // Deserialize the user cookie if it exists to retrieve role and email
     if (!string.IsNullOrEmpty(userCookie))
     {
         try
@@ -49,22 +49,30 @@ app.Use(async (context, next) =>
             Console.WriteLine($"JSON Exception: {ex.Message}");
         }
     }
+
     bool isAdmin = userRole == "Admin";
     bool isStaff = userRole == "Staff";
-    if (path.StartsWith("/Manage", StringComparison.OrdinalIgnoreCase))
+    bool isCustomer = userRole == "Customer";
+    // Check if the requested path starts with /Manage and the user is not Admin or Staff
+    if (path.StartsWith("/Manage", StringComparison.OrdinalIgnoreCase) && !(isAdmin || isStaff))
     {
-        if (!isAdmin && !isStaff)
+        var userIp = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown IP";
+        if (isCustomer)
         {
-            var userIp = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown IP";
-            Console.WriteLine($"Unauthorized access attempt to {path} by IP: {userIp}");
-            context.Response.Redirect("/Index");
-            return;
+            Console.WriteLine($"Unauthorized access attempt to {path} by customer with email: {userEmail}");
         }
+        else
+        {
+            Console.WriteLine($"Unauthorized access attempt to {path} by IP: {userIp}");
+        }
+        context.Response.Redirect("/UnauthorizedAccess");
+        return;
     }
+    // Check if the path is /Manage/UsersManager and if the user is Staff
     if (path.StartsWith("/Manage/UsersManager", StringComparison.OrdinalIgnoreCase) && isStaff)
     {
         Console.WriteLine($"Unauthorized access attempt to {path} by user: {userEmail}");
-        context.Response.Redirect("/Index");
+        context.Response.Redirect("/UnauthorizedAccess");
         return;
     }
     await next();

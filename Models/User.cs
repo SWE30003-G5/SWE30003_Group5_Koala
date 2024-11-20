@@ -9,27 +9,30 @@ namespace SWE30003_Group5_Koala.Models
         [Key]
         public int ID { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(30)]
         public string Name { get; set; }
 
         [Required]
-        [StringLength(10)]
-        [DefaultValue("Customer")]
         public string Role { get; set; }
 
         [Required]
         [EmailAddress]
-        [StringLength(100)]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(50)]
-        [DefaultValue("Hunter3")]
+        [StringLength(30)]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$", ErrorMessage = "Password must have at least 1 uppercase letter, 1 lowercase letter, and 1 number.")]
         public string Password { get; set; } //password must contain letters and numbers only, no special characters
 
         [Phone]
-        [StringLength(10, ErrorMessage = "Phone number cannot exceed 10 digits.")]
+        [StringLength(10)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
+        public User()
+        {
+            Role = "Customer";
+        }
     }
 }

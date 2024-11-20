@@ -1,5 +1,40 @@
-﻿document.getElementById('orderForm').addEventListener('submit', function (event) {
+﻿function getCookie(cookieName) {
+    const name = cookieName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0) {
+            return cookie.substring(name.length, cookie.length);
+        }
+    }
+    return null;
+}
+
+document.getElementById('orderForm').addEventListener('submit', function (event) {
     event.preventDefault();
+
+    try {
+        const userCookie = getCookie("userCookie");
+        const users = JSON.parse(userCookie);
+        if (!users || users.length === 0) {
+            alert("You must be logged in to place an order.");
+            return;
+        }
+    } catch (error) {
+        console.error("Error parsing user cookie:", error);
+        alert("Invalid session. Please log in again.");
+        return;
+    }
+
+    const orderType = document.getElementById('orderType').value;
+    if (!orderType) {
+        alert("Please choose your order type.");
+        return;
+    }
 
     const orderItems = [];
     const orderItemsElements = document.querySelectorAll('.order-item');
@@ -38,6 +73,7 @@
     hiddenInput.value = orderItemsJson;
 
     this.appendChild(hiddenInput);
+    alert("Your order has been successfully placed!");
     this.submit();
 });
 
@@ -74,7 +110,7 @@ document.getElementById('addOrderItem').addEventListener('click', function () {
     quantityInput.min = '1';
     quantityInput.value = '1';
     quantityInput.addEventListener('input', function (e) {
-        if (this.value === '' || isNaN(this.value ) || this.value === '0') {
+        if (this.value === '' || isNaN(this.value) || this.value === '0') {
             this.value = '1';
         }
     });

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SWE30003_Group5_Koala.Data;
 
@@ -10,9 +11,11 @@ using SWE30003_Group5_Koala.Data;
 namespace SWE30003_Group5_Koala.Migrations
 {
     [DbContext(typeof(KoalaDbContext))]
-    partial class KoalaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241114085738_AddReservationAndTable")]
+    partial class AddReservationAndTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -25,7 +28,6 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.Property<string>("ImageLocation")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsAvailable")
@@ -41,7 +43,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MenuItems", (string)null);
+                    b.ToTable("MenuItems");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
@@ -73,7 +75,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
@@ -100,7 +102,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
@@ -132,7 +134,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Reservations", (string)null);
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Table", b =>
@@ -146,7 +148,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables", (string)null);
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.User", b =>
@@ -165,11 +167,6 @@ namespace SWE30003_Group5_Koala.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -177,12 +174,12 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>

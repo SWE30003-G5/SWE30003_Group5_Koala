@@ -17,7 +17,8 @@ namespace SWE30003_Group5_Koala.Models
         public decimal Price { get; set; }
         [DefaultValue(true)]
         public bool IsAvailable { get; set; }
-
+        [StringLength(50)]
+        [DefaultValue("Blank")]
         public string ImageLocation { get; set; }
     }
 }

@@ -35,20 +35,11 @@ namespace SWE30003_Group5_Koala.Pages
             {
                 var cookieOptions = new CookieOptions
                 {
-                    // Set the secure flag, which Chrome's changes will require for SameSite none.
-                    // Note this will also require you to be running on HTTPS
-                    Secure = true,
-
-                    // Set the cookie to HTTP only which is good practice unless you really do need
-                    // to access it client side in scripts.
-                    HttpOnly = true,
-
-                    // Add the SameSite attribute, this will emit the attribute with a value of none.
-                    // To not emit the attribute at all set the SameSite property to SameSiteMode.Unspecified.
-                    SameSite = SameSiteMode.Lax,
-
-                    //Change to set when cookie expires
-                    Expires = DateTime.Now.AddDays(30),
+                    Secure = true, // Ensure secure transmission in production
+                    HttpOnly = false, // Allow JavaScript access to the cookie if needed
+                    SameSite = SameSiteMode.Lax, // Mitigate CSRF attacks
+                    Path = "/", // Ensure cookie is accessible across the site
+                    Expires = DateTime.Now.AddDays(30) // Expiration period
                 };
 
                 var userConvertJson = JsonSerializer.Serialize(returnedUser);
@@ -59,9 +50,32 @@ namespace SWE30003_Group5_Koala.Pages
             }
             else
             {
-                ViewData["ErrorMessage"] = "Check your information again";
+                ViewData["ErrorMessage"] = "Invalid login credentials. Please try again.";
                 return Page();
             }
+        }
+
+        //This is to stop user from login or register when have cookie
+        public IActionResult OnGet()
+        {
+            Models.User userCookieClient = new();
+            var cookieJson = Request.Cookies["userCookie"]; //Step 1: get the json file from cookie
+
+            if (cookieJson != null)
+            {
+                // Deserialize the JSON array into a list of users. Because we use ToList in Login.cshtml.cs
+                //Step 2: Deserialize the json of cookie into list
+                var userList = JsonSerializer.Deserialize<List<Models.User>>(cookieJson);
+
+                //Step 3: Check if list has any cookies(objects) in them then user First() to get the first object in the list
+                // Safely check if the list contains at least one user
+                if (userList != null && userList.Any())
+                {
+                    return RedirectToPage("/Index");
+                }
+            }
+
+            return Page();
         }
     }
 }

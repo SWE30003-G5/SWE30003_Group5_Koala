@@ -18,221 +18,221 @@ namespace SWE30003_Group5_Koala.Migrations
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.MenuItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("ImageLocation")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                b.Property<string>("ImageLocation")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
+                b.Property<bool>("IsAvailable")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10, 2)");
+                b.Property<decimal>("Price")
+                    .HasColumnType("decimal(10, 2)");
 
-                    b.HasKey("ID");
+                b.HasKey("ID");
 
-                    b.ToTable("MenuItems");
-                });
+                b.ToTable("MenuItems", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
+                b.Property<DateTime>("Date")
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("TEXT");
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(10, 2)");
+                b.Property<decimal>("TotalAmount")
+                    .HasColumnType("decimal(10, 2)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Type")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("UserID")
+                    .HasColumnType("INTEGER");
 
-                    b.HasKey("ID");
+                b.HasKey("ID");
 
-                    b.HasIndex("UserID");
+                b.HasIndex("UserID");
 
-                    b.ToTable("Orders");
-                });
+                b.ToTable("Orders", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("MenuItemID")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("MenuItemID")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("OrderID")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("OrderID")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("Quantity")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("decimal(10,2)");
+                b.Property<decimal>("SubTotal")
+                    .HasColumnType("decimal(10,2)");
 
-                    b.HasKey("ID");
+                b.HasKey("ID");
 
-                    b.HasIndex("MenuItemID");
+                b.HasIndex("MenuItemID");
 
-                    b.HasIndex("OrderID");
+                b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems");
-                });
+                b.ToTable("OrderItems", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("PartySize")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("PartySize")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("TableID")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("TableID")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("TEXT");
+                b.Property<DateTime>("Time")
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("UserID")
+                    .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("TableID");
+                b.HasIndex("TableID");
 
-                    b.HasIndex("UserID");
+                b.HasIndex("UserID");
 
-                    b.ToTable("Reservations");
-                });
+                b.ToTable("Reservations", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Table", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("INTEGER");
+                b.Property<bool>("IsAvailable")
+                    .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Tables");
-                });
+                b.ToTable("Tables", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.User", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                b.Property<string>("PhoneNumber")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                b.Property<string>("Role")
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnType("TEXT");
 
-                    b.HasKey("ID");
+                b.HasKey("ID");
 
-                    b.ToTable("Users");
-                });
+                b.ToTable("Users", (string)null);
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
-                {
-                    b.HasOne("SWE30003_Group5_Koala.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("SWE30003_Group5_Koala.Models.User", "User")
+                    .WithMany()
+                    .HasForeignKey("UserID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("User");
-                });
+                b.Navigation("User");
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
-                {
-                    b.HasOne("SWE30003_Group5_Koala.Models.MenuItem", "MenuItem")
-                        .WithMany()
-                        .HasForeignKey("MenuItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("SWE30003_Group5_Koala.Models.MenuItem", "MenuItem")
+                    .WithMany()
+                    .HasForeignKey("MenuItemID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("SWE30003_Group5_Koala.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("SWE30003_Group5_Koala.Models.Order", "Order")
+                    .WithMany()
+                    .HasForeignKey("OrderID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("MenuItem");
+                b.Navigation("MenuItem");
 
-                    b.Navigation("Order");
-                });
+                b.Navigation("Order");
+            });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
-                {
-                    b.HasOne("SWE30003_Group5_Koala.Models.Table", "Table")
-                        .WithMany()
-                        .HasForeignKey("TableID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("SWE30003_Group5_Koala.Models.Table", "Table")
+                    .WithMany()
+                    .HasForeignKey("TableID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("SWE30003_Group5_Koala.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("SWE30003_Group5_Koala.Models.User", "User")
+                    .WithMany()
+                    .HasForeignKey("UserID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Table");
+                b.Navigation("Table");
 
-                    b.Navigation("User");
-                });
+                b.Navigation("User");
+            });
 #pragma warning restore 612, 618
         }
     }

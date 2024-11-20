@@ -30,6 +30,11 @@ document.getElementById('orderForm').addEventListener('submit', function (event)
         return;
     }
 
+    const orderType = document.getElementById('orderType').value;
+    if (!orderType) {
+        alert("Please choose your order type.");
+        return;
+    }
 
     const orderItems = [];
     const orderItemsElements = document.querySelectorAll('.order-item');

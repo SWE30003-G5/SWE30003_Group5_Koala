@@ -53,6 +53,36 @@
         <button type="submit" class="btn btn-success">Place order</button>
     </form>
 </div>
+<!-- Order History -->
+<div class="container mt-5">
+    <h2>Order History</h2>
+    @if (Model.OrderHistory != null && Model.OrderHistory.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.OrderHistory)
+                {
+                    <tr>
+                        <td>@order.ID</td>
+                        <td>@order.Date.ToString("MM/dd/yyyy HH:mm")</td>
+                        <td>@order.TotalAmount.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No orders found.</p>
+    }
+</div>
 <script>
     const menuItems = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MenuItems));
 </script>

@@ -19,7 +19,7 @@ namespace SWE30003_Group5_Koala.Models
         [Required]
         [Range(1, 20, ErrorMessage = "Party size must be between 1 and 20.")]
         [Display(Name = "Party Size")]
-        public int PartySize { get; set;
+        public int PartySize { get; set; }
 
 
         [Required]

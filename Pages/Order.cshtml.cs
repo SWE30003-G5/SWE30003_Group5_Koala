@@ -17,6 +17,8 @@ namespace SWE30003_Group5_Koala.Pages
             _logger = logger;
         }
         public IList<MenuItem> MenuItems { get; set; } = default!;
+        public IList<Order> OrderHistory { get; set; } = default!;
+
         [BindProperty]
         public string OrderType { get; set; }
         [BindProperty]
@@ -30,11 +32,42 @@ namespace SWE30003_Group5_Koala.Pages
                 _logger.LogError("The Menu Items context is null.");
                 return;
             }
-            else {
 
-                MenuItems = await _context.MenuItems.ToListAsync();
+            MenuItems = await _context.MenuItems.ToListAsync();
+
+            var userCookie = Request.Cookies["userCookie"];
+            int? userID = null;
+
+            if (!string.IsNullOrEmpty(userCookie))
+            {
+                try
+                {
+                    var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+                    if (users != null && users.Count > 0)
+                    {
+                        userID = users[0].ID;
+                    }
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger.LogError(ex, "Error parsing userCookie.");
+                    return;
+                }
             }
+
+            if (!userID.HasValue)
+            {
+                _logger.LogWarning("UserID is missing from cookie.");
+                return;
+            }
+
+            // Fetch the orders for the logged-in user
+            OrderHistory = await _context.Orders
+                .Where(o => o.UserID == userID.Value)
+                .OrderByDescending(o => o.Date)
+                .ToListAsync();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

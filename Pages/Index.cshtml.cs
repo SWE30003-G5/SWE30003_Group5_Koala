@@ -43,6 +43,7 @@ namespace SWE30003_Group5_Koala.Pages
                     // Assign values from the first user in the list
                     userID = userCookieClient.ID;
                     userEmail = userCookieClient.Email;
+                    userPhoneNumber = userCookieClient.PhoneNumber;
                     userName = userCookieClient.Name;
                     userRole = userCookieClient.Role;
                     userPassword = userCookieClient.Password;
@@ -51,6 +52,7 @@ namespace SWE30003_Group5_Koala.Pages
                 {
                     userID = 0;
                     userEmail = "Blank";
+                    userPhoneNumber = "Blank";
                     userName = "Blank";
                     userRole = "Blank";
                     userPassword = "Blank";
@@ -60,6 +62,7 @@ namespace SWE30003_Group5_Koala.Pages
             {
                 userID = 0;
                 userEmail = "Blank";
+                userPhoneNumber = "Blank";
                 userName = "Blank";
                 userRole = "Blank";
                 userPassword = "Blank";

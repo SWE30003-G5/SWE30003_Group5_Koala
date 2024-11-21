@@ -50,9 +50,32 @@ namespace SWE30003_Group5_Koala.Pages
             }
             else
             {
-                ViewData["ErrorMessage"] = "Check your information again";
+                ViewData["ErrorMessage"] = "Invalid login credentials. Please try again.";
                 return Page();
             }
+        }
+
+        //This is to stop user from login or register when have cookie
+        public IActionResult OnGet()
+        {
+            Models.User userCookieClient = new();
+            var cookieJson = Request.Cookies["userCookie"]; //Step 1: get the json file from cookie
+
+            if (cookieJson != null)
+            {
+                // Deserialize the JSON array into a list of users. Because we use ToList in Login.cshtml.cs
+                //Step 2: Deserialize the json of cookie into list
+                var userList = JsonSerializer.Deserialize<List<Models.User>>(cookieJson);
+
+                //Step 3: Check if list has any cookies(objects) in them then user First() to get the first object in the list
+                // Safely check if the list contains at least one user
+                if (userList != null && userList.Any())
+                {
+                    return RedirectToPage("/Index");
+                }
+            }
+
+            return Page();
         }
     }
 }

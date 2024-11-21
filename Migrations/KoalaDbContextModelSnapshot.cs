@@ -41,7 +41,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("MenuItems");
+                    b.ToTable("MenuItems", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>
@@ -73,7 +73,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.OrderItem", b =>
@@ -100,7 +100,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Reservation", b =>
@@ -132,7 +132,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Table", b =>
@@ -146,7 +146,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tables");
+                    b.ToTable("Tables", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.User", b =>
@@ -182,7 +182,7 @@ namespace SWE30003_Group5_Koala.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("SWE30003_Group5_Koala.Models.Order", b =>

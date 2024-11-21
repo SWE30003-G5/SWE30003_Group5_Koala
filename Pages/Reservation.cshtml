@@ -31,7 +31,11 @@
 {
     <p class="alert alert-warning">You have to log in to see the reservation history!</p>
 }
-@if (Model.ReservationHistory != null && Model.ReservationHistory.Any())
+else if (Model.ReservationHistory == null || !Model.ReservationHistory.Any())
+{
+    <p class="alert alert-info">You have no reservation history.</p>
+}
+else
 {
     <table class="table">
         <thead>

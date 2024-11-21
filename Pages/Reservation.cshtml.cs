@@ -121,7 +121,7 @@ namespace SWE30003_Group5_Koala.Pages
                 {
                     PartySize = PartySize,
                     UserID = userID.Value,
-                    TableID = 1, // This should ideally be determined dynamically
+                    TableID = 1,
                     Time = combinedDateTime,
                     Status = "Pending",
                 };

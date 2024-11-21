@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using SWE30003_Group5_Koala.Data;
 using SWE30003_Group5_Koala.Models;
+using SWE30003_Group5_Koala.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,12 @@ builder.Services.AddDbContext<KoalaDbContext>(options => options.UseSqlite(
     builder.Configuration.GetConnectionString("KoalaDb")));
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<KoalaDbContext>();
+    DatabaseInitializer.Initialize(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

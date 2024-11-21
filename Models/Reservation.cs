@@ -1,17 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
 namespace SWE30003_Group5_Koala.Models
 {
     public class Reservation
     {
         [Key]
         public int Id { get; set; }
+
+        // Foreign key for User
         [Required]
         [ForeignKey("User")]
         public int UserID { get; set; }
-
         [ValidateNever]
         public User User { get; set; }
 
@@ -19,6 +20,7 @@ namespace SWE30003_Group5_Koala.Models
         [Range(1, 20, ErrorMessage = "Party size must be between 1 and 20.")]
         [Display(Name = "Party Size")]
         public int PartySize { get; set; }
+
 
         [Required]
         [FutureDate(ErrorMessage = "Reservation time must be in the future.")]
@@ -31,7 +33,6 @@ namespace SWE30003_Group5_Koala.Models
         public Table Table { get; set; }
 
         [Required]
-        [Display(Name = "Reservation Status")]
         [StringLength(20)]
         public string Status { get; set; } = "Pending";
     }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SWE30003_Group5_Koala.Data;
@@ -12,9 +8,9 @@ namespace SWE30003_Group5_Koala.Pages.Manage.MenuItemManager
 {
     public class DeleteModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
 
-        public DeleteModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        public DeleteModel(KoalaDbContext context)
         {
             _context = context;
         }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SWE30003_Group5_Koala.Data;
 using SWE30003_Group5_Koala.Models;
@@ -13,9 +8,9 @@ namespace SWE30003_Group5_Koala.Pages.Manage.MenuItemManager
 {
     public class EditModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
 
-        public EditModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        public EditModel(KoalaDbContext context)
         {
             _context = context;
         }
@@ -39,8 +34,6 @@ namespace SWE30003_Group5_Koala.Pages.Manage.MenuItemManager
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

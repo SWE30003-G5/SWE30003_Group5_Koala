@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SWE30003_Group5_Koala.Data;
@@ -12,9 +8,9 @@ namespace SWE30003_Group5_Koala.Pages.Manage.MenuItemManager
 {
     public class DetailsModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
 
-        public DetailsModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        public DetailsModel(KoalaDbContext context)
         {
             _context = context;
         }

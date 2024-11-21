@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Globalization;
-using System.Text.Json;
 
 namespace SWE30003_Group5_Koala.Pages
 {

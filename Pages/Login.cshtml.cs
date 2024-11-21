@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using SWE30003_Group5_Koala.Data;
-using SWE30003_Group5_Koala.Models;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace SWE30003_Group5_Koala.Pages
@@ -14,9 +11,9 @@ namespace SWE30003_Group5_Koala.Pages
         private readonly ILogger<LoginModel> _logger;
 
         [BindProperty]
-        public string userEmail { get; set; } //for the input email in the login page
+        public string userEmail { get; set; }
         [BindProperty]
-        public string userPassword { get; set; } //Same as userEmail
+        public string userPassword { get; set; }
 
         public LoginModel(KoalaDbContext context, ILogger<LoginModel> logger)
         {
@@ -59,16 +56,12 @@ namespace SWE30003_Group5_Koala.Pages
         public IActionResult OnGet()
         {
             Models.User userCookieClient = new();
-            var cookieJson = Request.Cookies["userCookie"]; //Step 1: get the json file from cookie
+            var cookieJson = Request.Cookies["userCookie"];
 
             if (cookieJson != null)
             {
-                // Deserialize the JSON array into a list of users. Because we use ToList in Login.cshtml.cs
-                //Step 2: Deserialize the json of cookie into list
                 var userList = JsonSerializer.Deserialize<List<Models.User>>(cookieJson);
 
-                //Step 3: Check if list has any cookies(objects) in them then user First() to get the first object in the list
-                // Safely check if the list contains at least one user
                 if (userList != null && userList.Any())
                 {
                     return RedirectToPage("/Index");

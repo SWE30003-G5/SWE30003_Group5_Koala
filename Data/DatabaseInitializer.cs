@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using SWE30003_Group5_Koala.Data;
+﻿using SWE30003_Group5_Koala.Data;
 using SWE30003_Group5_Koala.Models;
-using System.Linq;
 
 namespace SWE30003_Group5_Koala.Services
 {

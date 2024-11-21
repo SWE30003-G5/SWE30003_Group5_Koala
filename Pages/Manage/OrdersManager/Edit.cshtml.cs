@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +10,8 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
     public class EditModel : PageModel
     {
         private readonly KoalaDbContext _context;
-        private readonly ILogger<EditModel> _logger;  // Declare a logger
+        private readonly ILogger<EditModel> _logger;
 
-        // Inject the logger into the constructor
         public EditModel(KoalaDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
@@ -47,8 +42,6 @@ namespace SWE30003_Group5_Koala.Pages.Manage.OrdersManager
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

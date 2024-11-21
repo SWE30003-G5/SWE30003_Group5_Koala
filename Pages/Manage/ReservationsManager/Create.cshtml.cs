@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SWE30003_Group5_Koala.Data;
@@ -12,9 +8,9 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
 {
     public class CreateModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
 
-        public CreateModel(SWE30003_Group5_Koala.Data.KoalaDbContext context)
+        public CreateModel(KoalaDbContext context)
         {
             _context = context;
         }
@@ -29,7 +25,6 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
         [BindProperty]
         public Reservation Reservation { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

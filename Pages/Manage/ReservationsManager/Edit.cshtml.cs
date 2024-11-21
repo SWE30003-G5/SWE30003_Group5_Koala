@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +9,9 @@ namespace SWE30003_Group5_Koala.Pages.Manage.ReservationsManager
 {
     public class EditModel : PageModel
     {
-        private readonly SWE30003_Group5_Koala.Data.KoalaDbContext _context;
+        private readonly KoalaDbContext _context;
         private readonly ILogger<EditModel> _logger;
-        public EditModel(SWE30003_Group5_Koala.Data.KoalaDbContext context, ILogger<EditModel> logger)
+        public EditModel(KoalaDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
             _logger = logger;

@@ -1,4 +1,28 @@
-﻿<!DOCTYPE html>
+﻿﻿@using SWE30003_Group5_Koala.Models
+
+@{
+    var userCookie = Context.Request.Cookies["userCookie"];
+    string userRole = null;
+
+    if (!string.IsNullOrEmpty(userCookie))
+    {
+        try
+        {
+            var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+
+            if (users != null && users.Count > 0)
+            {
+                userRole = users[0].Role;
+            }
+        }
+        catch (System.Text.Json.JsonException jsonEx)
+        {
+            Console.WriteLine($"JSON Error: {jsonEx.Message}");
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,7 +55,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Reservation">Reservation</a>
                         </li>
-                        @if (Context.Request.Cookies["userCookie"] == null) @* check if cookie exist to show login page *@
+                        @if (userRole == "Admin" || userRole == "Staff")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Manage/Admin">Management</a>
+                            </li>
+                        }
+                        @if (userCookie == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
@@ -50,9 +80,6 @@
                                 </form>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -66,7 +93,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - SWE30003_Group5_Koala - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - SWE30003_Group5_Koala
         </div>
     </footer>
 

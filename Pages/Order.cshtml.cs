@@ -18,7 +18,7 @@ namespace SWE30003_Group5_Koala.Pages
         }
         public IList<MenuItem> MenuItems { get; set; } = default!;
         public IList<Order> OrderHistory { get; set; } = default!;
-
+        
         public bool IsLoggedIn { get; set; }
 
         [BindProperty]

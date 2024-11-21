@@ -110,7 +110,7 @@ document.getElementById('addOrderItem').addEventListener('click', function () {
     quantityInput.min = '1';
     quantityInput.value = '1';
     quantityInput.addEventListener('input', function (e) {
-        if (this.value === '' || isNaN(this.value ) || this.value === '0') {
+        if (this.value === '' || isNaN(this.value) || this.value === '0') {
             this.value = '1';
         }
     });

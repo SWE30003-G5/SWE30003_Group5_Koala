@@ -4,29 +4,56 @@
     ViewData["Title"] = "Reservation";
 }
 
-<h1>@Model.Message</h1>
-
-<form method="post">
-    <div class="form-group">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="Name" class="form-control" required>
-    </div>
+<h1>Make a Reservation</h1>
+@{
+    var currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+    var currentTime = DateTime.Now.ToString("HH:mm");
+}
+<form method="post" id="reservationForm">
     <div class="form-group">
         <label for="guests">Party Size:</label>
-        <input asp-for="PartySize" type="number" id="guests" class="form-control" required>
+        <input asp-for="PartySize" type="number" id="guests" class="form-control" min="1" max="20" required>
+    </div>
+    <div class="form-group">
+        <label for="date">Date:</label>
+        <input asp-for="ReservationDate" type="date" id="date" class="form-control" required min="@currentDate">
     </div>
     <div class="form-group">
         <label for="time">Time:</label>
-        <input asp-for="Time" id="time" class="form-control" required>
+        <select asp-for="ReservationTime" id="time" class="form-control" required></select>
     </div>
-
-
-    <button type="submit" class="btn btn-primary" onclick="showMessage()">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<!-- Reservation History -->
 
-<script>
-    function showMessage() {
-        alert("Reservation booked!");
-    }
+<h2>Your Reservation History</h2>
+@if (!Model.IsLoggedIn)
+{
+    <p class="alert alert-warning">You have to log in to see the reservation history!</p>
+}
+@if (Model.ReservationHistory != null && Model.ReservationHistory.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Party Size</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model.ReservationHistory)
+            {
+                <tr>
+                    <td>@reservation.PartySize</td>
+                    <td>@reservation.Time.ToString("yyyy-MM-dd")</td>
+                    <td>@reservation.Time.ToString("HH:mm")</td>
+                    <td>@reservation.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-</script>
+<script src="~/js/reservation.js"></script>

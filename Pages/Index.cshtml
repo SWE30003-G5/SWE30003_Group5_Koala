@@ -4,15 +4,25 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>This is Home page</p>
+<link rel="stylesheet" href="~/css/homepage.css">
 
-@*     Test purpose to check cookie exist only, can comment later if don't want*@    
-    <p>User ID: @Model.userID</p>
-    <p>User Name: @Model.userName</p>
-    <p>User Email: @Model.userEmail</p>
-    <p>User Phone Number: @Model.userPhoneNumber</p>
-    <p>User Role: @Model.userRole</p>
-    <p>User Password: @Model.userPassword</p>
+<div class="fullscreen-background d-flex justify-content-center align-items-center text-center">
+    <div class="content">
+        <h1 class="brand-name">Relaxing Koala</h1>
+        <p class="slogan">Where every meal is a moment of peace</p>
+    </div>
+
+    <!-- Start Explore Section at the bottom -->
+    <div class="explore-section text-center">
+        <h2 class="mb-4">Start Exploring</h2>
+        <div class="d-flex justify-content-center gap-3 mb-4">
+            <a href="/Menu" class="btn btn-primary px-4 py-2">Menu</a>
+            <a href="/Order" class="btn btn-success px-4 py-2">Order</a>
+            <a href="/Reservation" class="btn btn-warning px-4 py-2">Reserve</a>
+        </div>
+
+        <div class="login-register-hint">
+            <p class="mb-3 emphasized-text">You need to <a href="/Login">Login</a> or <a href="/Register">Register</a> if you don't have an account before placing an order or making a reservation.</p>
+        </div>
+    </div>
 </div>

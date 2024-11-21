@@ -56,7 +56,15 @@
 <!-- Order History -->
 <div class="container mt-5">
     <h2>Order History</h2>
-    @if (Model.OrderHistory != null && Model.OrderHistory.Any())
+    @if (!Model.IsLoggedIn)
+    {
+        <p class="alert alert-warning">You have to log in to see the order history!</p>
+    }
+    else if (Model.OrderHistory == null || !Model.OrderHistory.Any())
+    {
+        <p class="alert alert-info">You haven't placed any orders yet.</p>
+    }
+    else
     {
         <table class="table table-striped">
             <thead>
@@ -77,10 +85,6 @@
                 }
             </tbody>
         </table>
-    }
-    else
-    {
-        <p>No orders found.</p>
     }
 </div>
 <script>

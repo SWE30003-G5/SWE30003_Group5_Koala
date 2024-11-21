@@ -18,6 +18,8 @@ namespace SWE30003_Group5_Koala.Pages
         }
         public IList<MenuItem> MenuItems { get; set; } = default!;
         public IList<Order> OrderHistory { get; set; } = default!;
+        
+        public bool IsLoggedIn { get; set; }
 
         [BindProperty]
         public string OrderType { get; set; }
@@ -46,6 +48,7 @@ namespace SWE30003_Group5_Koala.Pages
                     if (users != null && users.Count > 0)
                     {
                         userID = users[0].ID;
+                        IsLoggedIn = true;
                     }
                 }
                 catch (System.Text.Json.JsonException ex)
@@ -57,6 +60,7 @@ namespace SWE30003_Group5_Koala.Pages
 
             if (!userID.HasValue)
             {
+                IsLoggedIn = false;
                 _logger.LogWarning("UserID is missing from cookie.");
                 return;
             }

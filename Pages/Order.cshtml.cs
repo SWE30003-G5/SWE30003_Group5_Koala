@@ -37,26 +37,7 @@ namespace SWE30003_Group5_Koala.Pages
 
             MenuItems = await _context.MenuItems.ToListAsync();
 
-            var userCookie = Request.Cookies["userCookie"];
-            int? userID = null;
-
-            if (!string.IsNullOrEmpty(userCookie))
-            {
-                try
-                {
-                    var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
-                    if (users != null && users.Count > 0)
-                    {
-                        userID = users[0].ID;
-                        IsLoggedIn = true;
-                    }
-                }
-                catch (System.Text.Json.JsonException ex)
-                {
-                    _logger.LogError(ex, "Error parsing userCookie.");
-                    return;
-                }
-            }
+            var userID = GetUserIDFromCookie();
 
             if (!userID.HasValue)
             {
@@ -85,26 +66,7 @@ namespace SWE30003_Group5_Koala.Pages
                 return Page();
             }
 
-            var userCookie = Request.Cookies["userCookie"];
-            int? userID = null;
-
-            if (!string.IsNullOrEmpty(userCookie))
-            {
-                try
-                {
-                    var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
-
-                    if (users != null && users.Count > 0)
-                    {
-                        userID = users[0].ID;
-                    }
-                }
-                catch (System.Text.Json.JsonException ex)
-                {
-                    _logger.LogError(ex, "Error parsing userCookie.");
-                    return BadRequest("Invalid user data.");
-                }
-            }
+            var userID = GetUserIDFromCookie();
 
             if (!userID.HasValue)
             {
@@ -165,6 +127,31 @@ namespace SWE30003_Group5_Koala.Pages
                 return StatusCode(500, "An error occurred while processing your order.");
             }
             return RedirectToPage("/Order", new { id = order.ID });
+        }
+
+        private int? GetUserIDFromCookie()
+        {
+            var userCookie = Request.Cookies["userCookie"];
+            int? userID = null;
+
+            if (!string.IsNullOrEmpty(userCookie))
+            {
+                try
+                {
+                    var users = System.Text.Json.JsonSerializer.Deserialize<List<User>>(userCookie);
+                    if (users != null && users.Count > 0)
+                    {
+                        userID = users[0].ID;
+                        IsLoggedIn = true;
+                    }
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger.LogError(ex, "Error parsing userCookie.");
+                }
+            }
+
+            return userID;
         }
     }
 }
